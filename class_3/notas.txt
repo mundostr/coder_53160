@@ -1,0 +1,39 @@
+Promesas = Promises
+
+3 estados:
+	- pending (pendiente)
+	- resolved (resuelta favorablemente)
+	- rejected (rechazada)
+
+
+Sincrónico vs asincrónico
+
+	Procesos con demora por naturaleza:
+	- solicitud remota (http/https)
+	- acceso a archivo
+	- acceso a bases de datos
+
+solicitud 1 (api): 200 ms
+solicitud 2 (bbdd): 300 ms
+solicitud 3 (api): 100 ms
+
+240 mHz = 240 millones de ciclos por segundo
+
+Limitaciones con manejo síncrono:
+	- acumulo demoras (600 ms)
+	- si un eslabón (host, etapa) tiene problemas
+	  se interrumpe la cadena, tengo que aguardar
+	  forzosamente al timeout.
+	BLOQUEANTE
+
+idle
+
+Opciones con manejo asíncrono:
+	- disparo solicitudes simultáneas.
+	NO BLOQUEANTE
+
+solicitud 1 (api): 200 ms
+solicitud 2 (bbdd): 300 ms
+solicitud 3 (api): 100 ms
+
+A los 100 ms ya tengo los primeros datos disponibles
