@@ -49,6 +49,12 @@ app.post('/', (req, res) => {
     if (password.length < 8) {
         res.status(400).send({ origin: 'server1', payload: [], error: 'Password mínimo 8 caracteres' });
     } else {
+        /**
+         * Si queremos probar siguiendo el mismo ejemplo que tenemos en data,
+         * requeriríamos en el body las propiedades firstName, lastName, age y active
+         * 
+         * Teniendo esos datos, haríamos un push al array con el nuevo contenido
+         */
         res.status(200).send({ origin: 'server1', payload: { email, password } });
     }
 });
