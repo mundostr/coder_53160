@@ -1,0 +1,19 @@
+<div>
+    <h1>Listado de usuarios</h1>
+
+    {{!-- Otro ejemplo utilizando un loop y una condición.
+
+    users es un array con datos de usuario que recibimos en el objeto pasado con res.render().
+    Lo recorremos con #each y accedemos dentro a las propiedades de cada elemento del array. --}}
+    <ul class="list-group">
+        {{#each users}}
+            {{!-- Una limitación de Handlebars, es que los #if no pueden evaluar condiciones directamente
+            en la plantilla, por lo tanto no podemos pasar expresiones, solo variables true / false.
+            En este caso, la propiedad active es de tipo booleano, por ende podemos usarla, pero no
+            podríamos hacer lo mismo con la propiedad role (ver data.js), necesitaríamos evaluarla
+            previamente en el endpoint y en base a ello, generar una propiedad booleana para poder
+            usar en este #if. --}}
+            <li class="list-group-item">{{lastName}}, {{firstName}} {{#if active}}(activo){{/if}}</li>
+        {{/each}}
+    </ul>
+</div>
