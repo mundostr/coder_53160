@@ -1,0 +1,49 @@
+<div>
+    <h1>CODER Chat</h1>
+    <h2>Ejemplo de cliente Socket.IO</h2>
+
+    <input type="text" id="chat" name="chat" placeholder="Ingresar mensaje" style="width: 300px;">
+    <br />
+    <button onClick="sendMessage()">Enviar</button>
+</div>
+
+{{!-- Atención!, esta ruta SOLO funciona porque la plantilla está siendo servida por Handlebars.
+Si este cliente estuviese armado por fuera (con JS Vanilla, React, Vue, etc), aquí se usaría
+una ruta de CDN o la que corresponda al lugar donde está el archivo JS del cliente Socket.IO. --}}
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    /*
+    Generamos una instancia del cliente.
+    Como en este caso el servidor Websockets se encuentra en el propio equipo,
+    pasamos io() sin parámetros, socket.IO se encargará de conectar.
+
+    Para conectar a un servidor en otra ubicación, usamos:
+    const socketClient = io('https://serverremoto.com:puerto', {
+        reconnection: true,
+        reconnectionAttempts: 3,
+        reconnectionDelay: 1000,
+        timeout: 20000,
+        autoConnect: true
+    });
+    */
+    const socketClient = io();
+    const chat = document.getElementById('chat');
+
+    // Activamos un listener que espera por mensajes en el tópico newMessageConfirmation
+    // En otras palabras, nos "suscribimos" a ese tópico. Cuando el server u otro cliente
+    // emitan algún mensaje en el tópico, recibiremos la notificación y se ejecutará el
+    // callback
+    socketClient.on('newMessageConfirmation', data => {
+        console.log(data);
+    });
+
+    const sendMessage = () => {
+        if (chat.value !== '') {
+            // Emitimos un mensaje en el tópico newMessage
+            // Como el server se encuentra escuchando este tópico (suscripto),
+            // recibirá el mensaje y ejecutará el callback que hayamos indicado.
+            socketClient.emit('newMessage', chat.value);
+            console.log('Mensaje enviado');
+        }
+    }
+</script>
