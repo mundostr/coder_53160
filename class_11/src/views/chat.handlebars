@@ -1,0 +1,84 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.min.css">
+
+<h1>CODERChat</h1>
+
+<div>
+    <input type="text" id="chatBox" placeholder="Ingresar mensaje" style="width: 300px;">
+    <br /><br />
+    <button onClick="sendMessage()">Enviar</button>
+</div>
+
+{{!-- Agregamos un párrafo con id, para poder referenciarlo desde JS
+y actualizar su contenido con los mensajes que vayan llegando --}}
+<div>
+    <p id="chatList"></p>
+</div>
+
+{{!-- Podemos utilizar tanto la versión de cliente de socket.io local, como desde CDN
+Si lo hacemos desde CDN, al momento de crear más abajo la instancia del socket,
+necesitaremos indicarle la dirección del servidor (serverAddress en este caso). --}}
+{{!-- <script src="/socket.io/socket.io.js"></script> --}}
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.all.min.js"></script>
+<script type="module">
+    const serverAddress = 'ws://localhost:5000';
+    const socketClient = io(serverAddress);
+    const chatBox = document.getElementById('chatBox');
+    const chatList = document.getElementById('chatList');
+
+    let user;
+
+    // Suscripción al tópico newClientConnected, para recibir aviso
+    // cada vez que ingrese un usuario nuevo al chat
+    socketClient.on('newClientConnected', data => {
+        console.log(data);
+    })
+
+    // Suscripción al tópico chatLog, para recibir la lista actual
+    // de chat al conectarnos
+    socketClient.on('chatLog', data => {
+        for (let i = 0; i < data.length; i++) {
+            chatList.innerHTML += `<br />[${data[i].user}]: ${data[i].message}`;
+        }
+    });
+
+    // Suscripción al tópico messageArrived, para recibir los contenidos
+    // en cada nuevo mensaje y poder actualizar el chatList
+    socketClient.on('messageArrived', data => {
+        chatList.innerHTML += `<br />[${data.user}]: ${data.message}`;
+    });
+
+    const sendMessage = () => {
+        if (chatBox.value !== '') {
+            // Emitimos en el tópico newMessage, enviando un objeto
+            socketClient.emit('newMessage', { user: user, message: chatBox.value });
+            chatBox.value = '';
+        }
+    }
+
+    // Esta función se declara como asíncrona para poder esperar el resultado de Swal.fire
+    // Es un ejemplo de como utilizar la librería SweetAlert2 para cajas de mensaje.
+    const askForUser = async () => {
+        const result = await Swal.fire({
+            title: 'Coderhouse',
+            input: 'text',
+            text: 'Usuario',
+            inputValidator: value => { return !value && 'Se debe indicar usuario' },
+            allowOutsideClick: false
+        });
+
+        user = result.value;
+        console.log(user);
+    }
+
+    // Podemos agregar eventos para captura de teclas, en este caso
+    // llamamos también a sendMessage() si se presiona Enter
+    chatBox.addEventListener('keyup', (evt) => {
+        if (evt.key === 'Enter') sendMessage()
+    });
+
+
+    // Flujo principal
+    // Comenzamos solicitando nombre del usuario que ingresa al chat
+    await askForUser();
+</script>
