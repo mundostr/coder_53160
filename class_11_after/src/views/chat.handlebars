@@ -1,0 +1,77 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.min.css">
+
+<h1>CODERChat</h1>
+
+<div>
+    <input type="text" id="chatBox" placeholder="Ingresar mensaje" style="width: 300px;">
+    <br /><br />
+    {{!-- Solo colocamos el id y activamos el evento debajo --}}
+    <button id="sendButton">Enviar</button>
+</div>
+
+<div>
+    <p id="chatList"></p>
+</div>
+
+{{!-- <script src="/socket.io/socket.io.js"></script> --}}
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.all.min.js"></script>
+
+<script type="module">
+    const serverAddress = 'ws://localhost:5000';
+    const socketClient = io(serverAddress);
+    const chatBox = document.getElementById('chatBox');
+    const chatList = document.getElementById('chatList');
+    const sendButton = document.getElementById('sendButton');
+    let user;
+
+    socketClient.on('newClientConnected', data => {
+        console.log(data);
+    });
+
+    socketClient.on('chatLog', data => {
+        for (let i = 0; i < data.length; i++) {
+            chatList.innerHTML += `<br />[${data[i].user}]: ${data[i].message}`;
+        }
+    });
+
+    socketClient.on('messageArrived', data => {
+        chatList.innerHTML += `<br />[${data.user}]: ${data.message}`;
+    });
+
+    const sendMessage = () => {
+        if (chatBox.value !== '') {
+            socketClient.emit('newMessage', { user: user, message: chatBox.value });
+            chatBox.value = '';
+        }
+    }
+
+    const askForUser = async () => {
+        const result = await Swal.fire({
+            title: 'Coderhouse',
+            input: 'text',
+            text: 'Usuario',
+            inputValidator: value => { return !value && 'Se debe indicar usuario' },
+            allowOutsideClick: false
+        });
+
+        user = result.value;
+        console.log(user);
+    }
+
+    chatBox.addEventListener('keyup', (evt) => {
+        if (evt.key === 'Enter') sendMessage()
+    });
+
+    // Activamos el evento del botón en este lugar, porque estamos utilizando
+    // este script como módulo (type="module"), el cual tiene su propio scope,
+    // nos genera problemas al llamar a la función sendMessage ya que no está
+    // disponible en el scope global de la plantilla
+    sendButton.addEventListener('click', (evt) => {
+        sendMessage();
+    });
+
+
+    // Flujo principal
+    await askForUser();
+</script>
