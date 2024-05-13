@@ -1,0 +1,9 @@
+<div>
+    <h1>Listado de usuarios</h1>
+
+    <ul class="list-group">
+        {{#each users}}
+            <li class="list-group-item">{{lastName}}, {{firstName}} {{#if active}}(activo){{/if}}</li>
+        {{/each}}
+    </ul>
+</div>

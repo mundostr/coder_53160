@@ -1,0 +1,10 @@
+[{"firstName":"Boris","lastName":"Patman","email":"bpatman0@paginegialle.it","password":"$2a$10$NPrn1ZMXmkt2EQyxx/bH8O3Cs7RTTwjE3VmrGmniUPFDfCuYXczP6", "role": "user"},
+{"firstName":"Anthony","lastName":"Tchaikovsky","email":"atchaikovsky1@japanpost.jp","password":"$2a$04$MNLq8rmWIFK0MW4nXy/jjueQW9h1HWT4jYXyHYH0umVajAGTmdzHW", "role": "user"},
+{"firstName":"Kevin","lastName":"Beefon","email":"kbeefon2@weather.com","password":"$2a$04$FOpLb0Ez1FWbd.spu2..J.zwxNZQyUmwgDBmxolXb4T4n5ylgQ4Su", "role": "user"},
+{"firstName":"Leyla","lastName":"Eastlake","email":"leastlake3@storify.com","password":"$2a$04$ZUSnhd/u9JSu5T6RG6WenO3X4RuIAV8oWY7U8d6D/KI9dphUyq6cq", "role": "premium"},
+{"firstName":"Tinna","lastName":"Ovey","email":"tovey4@freewebs.com","password":"$2a$04$hpwPuX4GOFrUno8zruTtquvDyD/yN9YG2ZD0FKa4YfjbBqHHEtZYC", "role": "user"},
+{"firstName":"Oswald","lastName":"Rumford","email":"orumford5@unblog.fr","password":"$2a$04$.QRNAz2XxDvgWu1BrCVgVuRsPDf4TQGEBtV7kv3pRSX52/2V27FeG", "role": "user"},
+{"firstName":"Manny","lastName":"Antowski","email":"mantowski6@clickbank.net","password":"$2a$04$5IBjPabZzep1OB7VhCY/X.RH2ovaaZUQFRT885Rwfs1DqdzycBspW", "role": "premium"},
+{"firstName":"Tom","lastName":"Scotford","email":"tscotford7@businesswire.com","password":"$2a$04$WOiole10bxcgx0PmRF6tReBnUP95k11yxNHWS9OV0QGwoepLrfxTK", "role": "user"},
+{"firstName":"Molly","lastName":"Tringham","email":"mtringham8@irs.gov","password":"$2a$04$60ypxNe94qgrjj8KhG1o2eIiVkn9dB.eZ8NhT4TW5mVla9IkSMRHG", "role": "user"},
+{"firstName":"Paul","lastName":"Hundell","email":"phundell9@vimeo.com","password":"$2a$04$XezWNouMIh/0HYW4ssNky.AWbrquMvG11EvCE2TQdG46kF5XpdCsW", "role": "user"}]
