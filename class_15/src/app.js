@@ -41,5 +41,5 @@ const expressInstance = app.listen(config.PORT, async() => {
     app.use('/api/products', productsRouter);
     app.use('/static', express.static(`${config.DIRNAME}/public`));
 
-    console.log(`App activa en puerto ${config.PORT} conectada a bbdd`);
+    console.log(`App activa en puerto ${config.PORT} conectada a bbdd ${config.SERVER}`);
 });

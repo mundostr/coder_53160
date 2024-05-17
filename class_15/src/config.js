@@ -1,7 +1,7 @@
 import path from 'path';
 
 const config = {
-    SERVER: 'local',
+    SERVER: 'atlas_16',
     PORT: 5050,
     // DIRNAME: url.fileURLToPath(new URL('.', import.meta.url)), // Linux / Mac
     DIRNAME: path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:\/)/, '$1')), // Win
