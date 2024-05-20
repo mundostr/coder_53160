@@ -9,6 +9,7 @@ const router = Router();
 router.get('/', async (req, res) => {
     try {
         const products = await productsModel.find().lean();
+
         res.status(200).send({ origin: config.SERVER, payload: products });
     } catch (err) {
         res.status(500).send({ origin: config.SERVER, payload: null, error: err.message });
@@ -18,9 +19,9 @@ router.get('/', async (req, res) => {
 router.post('/', uploader.single('thumbnail'), async (req, res) => {
     try {
         const socketServer = req.app.get('socketServer');
-
-        // productsModel.create();
-        res.status(200).send({ origin: config.SERVER, payload: 'POST' });
+        const process = await productsModel.create(req.body);
+        
+        res.status(200).send({ origin: config.SERVER, payload: process });
 
         socketServer.emit('newProduct', req.body);
     } catch (err) {
@@ -30,8 +31,12 @@ router.post('/', uploader.single('thumbnail'), async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     try {
-        // productsModel.findOneAndUpdate();
-        res.status(200).send({ origin: config.SERVER, payload: 'PUT' });
+        const filter = { _id: req.params.id };
+        const update = req.body;
+        const options = { new: true };
+        const process = await productsModel.findOneAndUpdate(filter, update, options);
+        
+        res.status(200).send({ origin: config.SERVER, payload: process });
     } catch (err) {
         res.status(500).send({ origin: config.SERVER, payload: null, error: err.message });
     }
@@ -39,8 +44,10 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     try {
-        // productsModel.findOneAndDelete();
-        res.status(200).send({ origin: config.SERVER, payload: 'DELETE' });
+        const filter = { _id: req.params.id };
+        const process = await productsModel.findOneAndDelete(filter);
+
+        res.status(200).send({ origin: config.SERVER, payload: process });
     } catch (err) {
         res.status(500).send({ origin: config.SERVER, payload: null, error: err.message });
     }
