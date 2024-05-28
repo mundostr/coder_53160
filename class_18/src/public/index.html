@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coder 53160</title>
+</head>
+<body>
+    <h1>Coder 53160</h1>
+
+    <form action="/api/users" method="post" enctype="multipart/form-data">
+        Nombre: <input type="text" name="firstName"><br />
+        Apellido: <input type="text" name="lastName"><br />
+        Edad: <input type="number" name="age"><br />
+        <!-- Un solo archivo -->
+        <!-- Edad: <input type="file" name="thumbnail"><br /> -->
+        <!-- Varios archivos -->
+        Edad: <input type="file" name="thumbnails" multiple><br />
+
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>
