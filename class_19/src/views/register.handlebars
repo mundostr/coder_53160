@@ -1,0 +1,84 @@
+<style>
+    body {
+        background-color: #333;
+    }
+
+    .register-container {
+        max-width: 360px;
+        margin: auto;
+        margin-top: 64px;
+        padding: 32px;
+        border-radius: 0.5em;
+        color: #333;
+        border: 1px solid #bbb;
+        background-color: #ccc;
+    }
+    
+    .btn-100 {
+        width: 100%;
+        margin-bottom: 0.5em;
+    }
+
+    .a2 {
+        color: #333;
+    }
+
+    .a2:hover {
+        color: #000;
+    }
+</style>
+
+
+<div class="register-container">
+    <h1><b>CODERStore</b></h1>
+    <h2><b>Registro</b></h2>
+
+    <form action="/api/sessions/register" method="post" style="margin-top: 32px;">
+        <div class="input-group" style="width: 100%; margin-bottom: 8px;">
+            <span class="input-group-text" id="group1"><i class="fa-solid fa-user"></i></span>
+            <input type="text" name="firstName" class="form-control" placeholder="Nombre" required="required" autocomplete="nombre" autofocus="autofocus">
+        </div>
+
+        <div class="input-group" style="width: 100%; margin-bottom: 8px;">
+            <span class="input-group-text" id="group2"><i class="fa-solid fa-user"></i></span>
+            <input type="text" name="lastName" class="form-control" placeholder="Apellido" required="required" autocomplete="apellido">
+        </div>
+
+        <div class="input-group" style="width: 100%; margin-bottom: 8px;">
+            <span class="input-group-text" id="group3"><i class="fa-solid fa-envelope"></i></span>
+            <input type="email" name="email" class="form-control" placeholder="Email" required="required" autocomplete="email">
+        </div>
+
+        <div class="input-group" style="width: 100%; margin-bottom: 8px;">
+            <span class="input-group-text" id="group4"><i class="fa-solid fa-venus-mars"></i></span>
+            {{!-- <input type="text" name="gender" class="form-control" placeholder="Gender" required="required" autocomplete="gender"> --}}
+            <select name="gender" class="form-control">
+                <option value="Female" selected>Femenino</option>
+                <option value="Male">Masculino</option>
+            </select>
+        </div>
+
+        <div class="input-group" style="width: 100%; margin-bottom: 32px;">
+            <span class="input-group-text" id="group5"><i class="fa-solid fa-lock"></i></span>
+            <input type="password" name="password" class="form-control" required="required" autocomplete="password">
+        </div>
+
+        <button type="submit" class="btn btn-success btn-100">Registrarse</button>
+
+        {{#if msg}}
+        <div style="margin-top: 24px;">
+            <div class="alert alert-danger" role="alert">{{msg}}</div>
+        </div>
+        {{/if}}
+        
+        <div style="margin-top: 24px;">
+            Ya tenés cuenta?: <a class="a2" href="/login">Ingresá</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    const visit = (destination) => {
+        window.location.replace(destination);
+    }
+</script>

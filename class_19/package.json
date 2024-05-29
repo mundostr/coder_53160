@@ -1,0 +1,25 @@
+{
+  "name": "class_19",
+  "version": "1.0.0",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "connect-mongo": "^5.1.0",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.19.2",
+    "express-handlebars": "^7.1.2",
+    "express-session": "^1.18.0",
+    "mongoose": "^8.3.5",
+    "mongoose-paginate-v2": "^1.8.1",
+    "multer": "^1.4.5-lts.1",
+    "session-file-store": "^1.5.0",
+    "socket.io": "^4.7.5"
+  }
+}
