@@ -4,9 +4,13 @@ class ProductsManager {
     constructor() {
     }
 
-    getAll = async (limit = 0) => {
+    getAll = async (limit = 0, page = 1) => {
         try {
-            return limit === 0 ? await productsModel.find().lean(): await productsModel.find().limit(limit).lean();
+            if (limit === 0) {
+                return await productsModel.find().lean();
+            } else {
+                return await productsModel.paginate({}, { page: page, limit: limit, lean: true });
+            }
         } catch (err) {
             return err.message;
         };

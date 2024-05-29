@@ -9,7 +9,8 @@ const config = {
     // MONGODB_URI: 'mongodb://127.0.0.1:27017/coder_53160',
     MONGODB_URI: 'mongodb+srv://coder_53160:coder2024@clustercoder.sxqjiud.mongodb.net/coder_53160',
     MONGODB_ID_REGEX: /^[a-fA-F0-9]{24}$/,
-    SECRET: 'coder_53160_abc1118'
+    SECRET: 'coder_53160_abc1118',
+    PRODUCTS_PER_PAGE: 5
 }
 
 export default config;

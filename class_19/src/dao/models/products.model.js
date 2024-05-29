@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate-v2';
 
 mongoose.pluralize(null);
 
@@ -13,6 +14,8 @@ const schema = new mongoose.Schema({
     code: { type: String, required: true },
     category: { type: String, enum: ['custom', 'special', 'standard'], default: 'standard' }
 });
+
+schema.plugin(mongoosePaginate);
 
 const model = mongoose.model(collection, schema);
 

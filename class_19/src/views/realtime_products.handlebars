@@ -1,14 +1,40 @@
+<style>
+    body {
+        background-color: #333 !important;
+    }
+
+    .a3 {
+        color: #f1f1f1;
+    }
+
+    .a3:hover {
+        color: #fff;
+    }
+</style>
+
 <div>
     <h1>Listado de productos en tiempo real</h1>
 
     <ul id="productsList" class="list-group">
-        {{#each products}}
-            <li class="list-group-item">{{name}} ($ {{price}})</li>
+        {{#each data.docs}}
+            <li class="list-group-item">{{title}} ($ {{price}})</li>
         {{/each}}
     </ul>
 </div>
 
-<div class="mt-3">
+<div class="mt-2 text-end">
+    {{#if data.prevPage}}
+    <a class="a3" href="/realtime_products/{{data.prevPage}}">Anterior</a>
+    {{/if}}
+    
+    &nbsp;|&nbsp;
+    
+    {{#if data.nextPage}}
+    <a class="a3" href="/realtime_products/{{data.nextPage}}">Siguiente</a>
+    {{/if}}
+</div>
+
+<div class="mt-5">
     <h3>Nuevo producto</h3>
 
     <form id="productForm">
