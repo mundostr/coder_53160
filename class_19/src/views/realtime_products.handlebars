@@ -17,7 +17,12 @@
 
     <ul id="productsList" class="list-group">
         {{#each data.docs}}
-            <li class="list-group-item">{{title}} ($ {{price}})</li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{title}} ($ {{price}})
+                <span class="badge">
+                    <button class="btn btn-success"><i class="fa-solid fa-cart-plus" onclick="addToCart('{{_id}}')"></i></button>
+                </span>
+            </li>
         {{/each}}
     </ul>
 </div>
@@ -74,4 +79,18 @@
             body: JSON.stringify({ name, price })
         });
     });
+
+    const addToCart = async (pid) => {
+        // Atención!, utilizar por ahora un id de prueba colocado a mano,
+        // que corresponda a un carrito que hayan creado, luego lo automatizaremos
+        // al completar el login de usuario
+        const cart = '664b399c57a29d3c1d91864e';
+        // alert(`Quiere agregar al carrito el producto ${id}`);
+
+        const process = await fetch(`/api/carts/${cart}/products/${pid}`, {
+            method: 'PUT'
+        });
+        const result = await process.json();
+        console.log(result);
+    }
 </script>

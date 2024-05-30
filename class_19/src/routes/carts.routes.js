@@ -39,6 +39,17 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+router.put('/:cid/products/:pid', async (req, res) => {
+    try {
+        const cart = req.params.cid;
+        const product = req.params.pid;
+        
+        res.status(200).send({ origin: config.SERVER, payload: `Agregar 1 unidad del producto ${product} al carrito ${cart}` });
+    } catch (err) {
+        res.status(500).send({ origin: config.SERVER, payload: null, error: err.message });
+    }
+});
+
 router.delete('/:id', async (req, res) => {
     try {
         const filter = { _id: req.params.id };
