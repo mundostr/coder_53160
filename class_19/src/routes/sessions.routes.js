@@ -19,8 +19,9 @@ const router = Router();
  * sino continuamos la cadena de express (next)
  */
 const adminAuth = (req, res, next) => {
-    if (!req.session.user || req.session.user.role !== 'admin')
-        // Si no existe el objeto req.session.user o el role no es admin
+    // ?: operador opcional: si no existe el objeto req.session.user o el role no es admin
+    // if (!req.session.user || req.session.user.role !== 'admin')
+    if (req.session.user?.role !== 'admin')
         return res.status(401).send({ origin: config.SERVER, payload: 'Acceso no autorizado: se requiere autenticación y nivel de admin' });
 
     next();
