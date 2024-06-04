@@ -1,0 +1,22 @@
+<style>
+    body {
+        background-color: #333;
+    }
+
+    .a2 {
+        color: #333;
+    }
+
+    .a2:hover {
+        color: #000;
+    }
+</style>
+
+<h1>Perfil de usuario {{login_type}}</h1>
+
+<h2>Usuario: {{user.firstName}}, {{user.lastName}}</h2>
+<h3>Rol: {{user.role}}</h3>
+
+<form action="/api/sessions/logout" method="get">
+    <button type="submit" class="btn btn-success">Salir</button>
+</form>
