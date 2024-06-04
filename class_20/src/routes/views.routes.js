@@ -22,7 +22,7 @@ router.get('/register', (req, res) => {
 router.get('/login', (req, res) => {
     // Si hay datos de sesión activos, redireccionamos al perfil
     if (req.session.user) return res.redirect('/profile');
-    res.render('login', {});
+    res.render('login', { showError: req.query.error ? true: false, errorMessage: req.query.error });
 });
 
 router.get('/profile', (req, res) => {
