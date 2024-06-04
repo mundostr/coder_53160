@@ -22,7 +22,7 @@ class UsersManager {
 
     getOne = async (filter) => {
         try {
-            return await usersModel.findOne(filter);
+            return await usersModel.findOne(filter).lean();
         } catch (err) {
             return err.message;
         };

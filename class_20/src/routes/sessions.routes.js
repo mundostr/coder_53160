@@ -58,7 +58,11 @@ router.post('/login', verifyRequiredBody(['email', 'password']), async (req, res
         const foundUser = await manager.getOne({ email: email });
 
         if (foundUser && isValidPassword(password, foundUser.password)) {
-            req.session.user = { firstName: foundUser.firstName, lastName: foundUser.lastName, email: email, role: foundUser.role };
+            // En lugar de armar req.session.user manualmente, aprovechamos el operador spread (...)
+            // para quitar la password del objeto foundUser y utilizar lo demás
+            const { password, ...filteredFoundUser } = foundUser;
+            // req.session.user = { firstName: foundUser.firstName, lastName: foundUser.lastName, email: email, role: foundUser.role };
+            req.session.user = filteredFoundUser;
             req.session.save(err => {
                 if (err) return res.status(500).send({ origin: config.SERVER, payload: null, error: err.message });
 
