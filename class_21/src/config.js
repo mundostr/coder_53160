@@ -11,6 +11,11 @@ const config = {
     MONGODB_ID_REGEX: /^[a-fA-F0-9]{24}$/,
     SECRET: 'coder_53160_abc1118',
     PRODUCTS_PER_PAGE: 5,
+    /*
+    ATENCION!!!: datos como el client_secret de Github NO deben exponerse de esta forma,
+    lo estamos haciendo simplemente por comodidad para instrucción, más adelante los
+    protegeremos colocándolos en otro lugar.
+    */
     GITHUB_CLIENT_ID: 'Iv23liLLnFfYaJ1KunFA',
     GITHUB_CLIENT_SECRET: '490c05f7375bd6955bf740163e11d69abbd38dd3',
     GITHUB_CALLBACK_URL: 'http://localhost:5050/api/sessions/ghlogincallback'
