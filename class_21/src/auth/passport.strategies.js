@@ -29,6 +29,8 @@ const initAuthStrategies = () => {
         }
     ));
 
+    // Crear otra estrategia tipo local para register
+
     // Estrategia de terceros (autenticamos a través de un servicio externo)
     passport.use('ghlogin', new GitHubStrategy(
         {
