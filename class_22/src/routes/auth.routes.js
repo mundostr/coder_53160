@@ -4,7 +4,7 @@ import passport from 'passport';
 import config from '../config.js';
 import { createHash, isValidPassword, verifyRequiredBody, createToken, verifyToken } from '../utils.js';
 import UsersManager from '../dao/users.manager.mdb.js';
-import initAuthStrategies from '../auth/passport.strategies.js';
+import initAuthStrategies, { passportCall } from '../auth/passport.strategies.js';
 
 const router = Router();
 const manager = new UsersManager();
@@ -25,7 +25,7 @@ const verifyAdmin = (req, res, next) => {
 const verifyAuthorization = role => {
     return async (req, res, next) => {
         if (!req.user) return res.status(401).send({ origin: config.SERVER, payload: 'Usuario no autenticado' });
-        if (req.user.role !== role) return res.status(403).send({ origin: config.SERVER, payload: 'Sin permisos suficientes' });
+        if (req.user.role !== role) return res.status(403).send({ origin: config.SERVER, payload: 'No tiene permisos para acceder al recurso' });
         
         next();
     }
@@ -54,7 +54,7 @@ router.post('/register', verifyRequiredBody(['firstName', 'lastName', 'email', '
     }
 });
 
-// Endpoint autenticación "manual" contra base de datos propia
+// Endpoint autenticación "manual" contra base de datos propia y session
 router.post('/login', verifyRequiredBody(['email', 'password']), async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -134,7 +134,8 @@ router.get('/admin', verifyToken, verifyAuthorization('admin'), async (req, res)
 });
 
 // Ejemplo autenticación y autorización de admin vía Passport
-router.get('/ppadmin', passport.authenticate('jwtlogin', { session: false }), verifyAuthorization('admin'), async (req, res) => {
+// router.get('/ppadmin', passport.authenticate('jwtlogin', { session: false }), verifyAuthorization('admin'), async (req, res) => {
+router.get('/ppadmin', passportCall('jwtlogin'), verifyAuthorization('admin'), async (req, res) => {
     try {
         res.status(200).send({ origin: config.SERVER, payload: 'Bienvenido ADMIN!' });
     } catch (err) {
