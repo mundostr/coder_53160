@@ -19,7 +19,7 @@ const config = {
     */
     GITHUB_CLIENT_ID: 'Iv23liLLnFfYaJ1KunFA',
     GITHUB_CLIENT_SECRET: '490c05f7375bd6955bf740163e11d69abbd38dd3',
-    GITHUB_CALLBACK_URL: 'http://localhost:5050/api/sessions/ghlogincallback'
+    GITHUB_CALLBACK_URL: 'http://localhost:5050/api/auth/ghlogincallback'
 }
 
 export default config;

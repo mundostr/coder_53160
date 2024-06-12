@@ -56,15 +56,24 @@ const initAuthStrategies = () => {
         },
         async (req, accessToken, refreshToken, profile, done) => {
             try {
-                // Si passport llega hasta acá, es porque la autenticación en Github
-                // ha sido correcta, tendremos un profile disponible
-                const email = profile._json?.email || null;
+                const emailsList = profile.emails || null;
+                let email = profile._json?.email || null;
+
+                console.log(emailsList);
+                console.log(email);
+
+                if (!emailsList && !email) {
+                    const response = await fetch('https://api.github.com/user/emails', {
+                        headers: {
+                            'Authorization': `token ${accessToken}`,
+                            'User-Agent': config.APP_NAME
+                        }
+                    });
+                    const emails = await response.json();
+                    email = emails.filter(email => email.verified).map(email => ({ value: email.email }));
+                }
                 
-                // Necesitamos que en el profile haya un email
                 if (email) {
-                    // Tratamos de ubicar en NUESTRA base de datos un usuario
-                    // con ese email, si no está lo creamos y lo devolvemos,
-                    // si ya existe retornamos directamente esos datos
                     const foundUser = await manager.getOne({ email: email });
 
                     if (!foundUser) {
@@ -72,7 +81,7 @@ const initAuthStrategies = () => {
                             firstName: profile._json.name.split(' ')[0],
                             lastName: profile._json.name.split(' ')[1],
                             email: email,
-                            password: 'none'
+                            password: 'none' // No lo dejamos vacío porque en el modelo está requerido
                         }
 
                         const process = await manager.add(user);
