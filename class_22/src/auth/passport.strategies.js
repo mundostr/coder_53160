@@ -59,9 +59,6 @@ const initAuthStrategies = () => {
                 const emailsList = profile.emails || null;
                 let email = profile._json?.email || null;
 
-                console.log(emailsList);
-                console.log(email);
-
                 if (!emailsList && !email) {
                     const response = await fetch('https://api.github.com/user/emails', {
                         headers: {
