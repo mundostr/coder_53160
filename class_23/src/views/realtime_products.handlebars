@@ -1,0 +1,96 @@
+<style>
+    body {
+        background-color: #333 !important;
+    }
+
+    .a3 {
+        color: #f1f1f1;
+    }
+
+    .a3:hover {
+        color: #fff;
+    }
+</style>
+
+<div>
+    <h1>Listado de productos en tiempo real</h1>
+
+    <ul id="productsList" class="list-group">
+        {{#each data.docs}}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{title}} ($ {{price}})
+                <span class="badge">
+                    <button class="btn btn-success"><i class="fa-solid fa-cart-plus" onclick="addToCart('{{_id}}')"></i></button>
+                </span>
+            </li>
+        {{/each}}
+    </ul>
+</div>
+
+<div class="mt-2 text-end">
+    {{#if data.prevPage}}
+    <a class="a3" href="/realtime_products/{{data.prevPage}}">Anterior</a>
+    {{/if}}
+    
+    &nbsp;|&nbsp;
+    
+    {{#if data.nextPage}}
+    <a class="a3" href="/realtime_products/{{data.nextPage}}">Siguiente</a>
+    {{/if}}
+</div>
+
+<div class="mt-5">
+    <h3>Nuevo producto</h3>
+
+    <form id="productForm">
+        <input class="form-control" type="text" id="name" name="name" placeholder="Nombre" style="width: 300px;"><br />
+        <input class="form-control" type="number" id="price" name="price" style="width: 100px;"><br />
+
+        <button type="submit" class="btn btn-success">Cargar</button>
+    </form>
+</div>
+
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
+<script>    
+    const serverAddress = 'ws://localhost:5050';
+    const socketClient = io(serverAddress);
+    const productsList = document.getElementById('productsList');
+    const productForm = document.getElementById('productForm');
+
+    socketClient.on('newProduct', data => {
+        const li = document.createElement('li');
+        li.textContent = `${data.name} ($ ${data.price})`;
+        li.classList.add('list-group-item');
+        productsList.appendChild(li);
+    });
+
+    // Activamos un listener para el submit del formulario,
+    // a efectos de enviar la solicitud POST con un fetch
+    // y evitar la recarga automática de la página
+    productForm.addEventListener('submit', async (evt) => {
+        evt.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const price = document.getElementById('price').value;
+
+        const process = await fetch('/api/products', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, price })
+        });
+    });
+
+    const addToCart = async (pid) => {
+        // Atención!, utilizar por ahora un id de prueba colocado a mano,
+        // que corresponda a un carrito que hayan creado, luego lo automatizaremos
+        // al completar el login de usuario
+        const cart = '664b399c57a29d3c1d91864e';
+        // alert(`Quiere agregar al carrito el producto ${id}`);
+
+        const process = await fetch(`/api/carts/${cart}/products/${pid}`, {
+            method: 'PUT'
+        });
+        const result = await process.json();
+        console.log(result);
+    }
+</script>
