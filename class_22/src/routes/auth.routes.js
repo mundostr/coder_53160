@@ -109,7 +109,7 @@ router.post('/jwtlogin', verifyRequiredBody(['email', 'password']), passport.aut
 });
 
 // 2 Endpoints autenticación con Passport y tercero (Github)
-router.get('/ghlogin', passport.authenticate('ghlogin', {scope: ['user:email']}), async (req, res) => {
+router.get('/ghlogin', passport.authenticate('ghlogin', {}), async (req, res) => {
 });
 router.get('/ghlogincallback', passport.authenticate('ghlogin', {failureRedirect: `/login?error=${encodeURI('Error al identificar con Github')}`}), async (req, res) => {
     try {

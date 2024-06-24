@@ -26,6 +26,7 @@ export const createToken = (payload, duration) => jwt.sign(payload, config.SECRE
  * Podemos ver debajo cómo el middleware intenta extraer un token de alguna de las 3 opciones.
  */
 export const verifyToken = (req, res, next) => {
+    // Header Authorization: Bearer <token>
     const headerToken = req.headers.authorization ? req.headers.authorization.split(' ')[1]: undefined;
     const cookieToken = req.cookies && req.cookies[`${config.APP_NAME}_cookie`] ? req.cookies[`${config.APP_NAME}_cookie`]: undefined;
     const queryToken = req.query.access_token ? req.query.access_token: undefined;
@@ -33,7 +34,7 @@ export const verifyToken = (req, res, next) => {
 
     if (!receivedToken) return res.status(401).send({ origin: config.SERVER, payload: 'Se requiere token' });
 
-    jwt.verify(headerToken, config.SECRET, (err, payload) => {
+    jwt.verify(receivedToken, config.SECRET, (err, payload) => {
         if (err) return res.status(403).send({ origin: config.SERVER, payload: 'Token no válido' });
         req.user = payload;
         next();

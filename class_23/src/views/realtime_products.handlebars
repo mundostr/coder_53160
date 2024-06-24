@@ -28,13 +28,13 @@
 </div>
 
 <div class="mt-2 text-end">
-    {{#if data.prevPage}}
+    {{#if data.hasPrevPage}}
     <a class="a3" href="/realtime_products/{{data.prevPage}}">Anterior</a>
     {{/if}}
     
     &nbsp;|&nbsp;
     
-    {{#if data.nextPage}}
+    {{#if data.hasNextPage}}
     <a class="a3" href="/realtime_products/{{data.nextPage}}">Siguiente</a>
     {{/if}}
 </div>

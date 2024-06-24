@@ -7,8 +7,13 @@ import ProductsManager from '../dao/products.manager.mdb.js';
 const router = Router();
 const manager = new ProductsManager();
 
-/* router.param('id', async (req, res, next, id) => {
-}) */
+router.param('id', async (req, res, next, id) => {
+    if (!config.MONGODB_ID_REGEX.test(req.params.id)) {
+        return res.status(400).send({ origin: config.SERVER, payload: null, error: 'Id no válido' });
+    }
+
+    next();
+})
 
 router.get('/', async (req, res) => {
     try {
@@ -22,13 +27,8 @@ router.get('/', async (req, res) => {
 
 router.get('/one/:id', async (req, res) => {
     try {
-        if (config.MONGODB_ID_REGEX.test(req.params.id)) {
-            const product = await manager.getById(req.params.id);
-
-            res.status(200).send({ origin: config.SERVER, payload: product });
-        } else {
-            res.status(400).send({ origin: config.SERVER, payload: null, error: 'Id no válido' });
-        }
+        const product = await manager.getById(req.params.id);
+        res.status(200).send({ origin: config.SERVER, payload: product });
     } catch (err) {
         res.status(500).send({ origin: config.SERVER, payload: null, error: err.message });
     }

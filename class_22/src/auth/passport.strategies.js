@@ -52,7 +52,8 @@ const initAuthStrategies = () => {
         {
             clientID: config.GITHUB_CLIENT_ID,
             clientSecret: config.GITHUB_CLIENT_SECRET,
-            callbackURL: config.GITHUB_CALLBACK_URL
+            callbackURL: config.GITHUB_CALLBACK_URL,
+            scope: ['user:email']
         },
         async (req, accessToken, refreshToken, profile, done) => {
             try {
@@ -71,7 +72,7 @@ const initAuthStrategies = () => {
                 }
                 
                 if (email) {
-                    const foundUser = await manager.getOne({ email: email });
+                    const foundUser = await manager.getOne({ email: emailsList[0] || email });
 
                     if (!foundUser) {
                         const user = {
@@ -88,7 +89,7 @@ const initAuthStrategies = () => {
                         return done(null, foundUser);
                     }
                 } else {
-                    return done(new Error('Faltan datos de perfil'), null);
+                    return done(new Error('Faltan datos de perfil, email no público'), null);
                 }
             } catch (err) {
                 return done(err, false);
