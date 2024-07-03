@@ -33,7 +33,6 @@ const verifyAuthorization = role => {
 
 const handlePolicies = policies => {
     return async (req, res, next) => {
-
     }
 }
 
