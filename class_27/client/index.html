@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #fff;
+            background-color: #333;
+            padding: 1em;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="mb-3">Prueba solicitud Frontend</h1>
+    <h3 class="mb-3">Un ejemplo básico de frontend. Al pulsar el botón, se llama a la función retrieveData, que utiliza fetch para realizar una solicitud remota.</h3>
+    <h4 class="mb-3">En este caso la solicitud se realiza a un endpoint de nuestro backend Express, para probarlo levantar el backend con nodemon como es habitual, y levantar por separado este index.html mediante el plugin Live Server de VSCode en la misma máquina.</h4>
+    <h4 class="mb-3">Verificar el error que aparece en la consola del navegador por la restricción de orígenes cruzados, habilitar luego cors en express y probar configuraciones para solucionarlo. Ver comentarios en app.js.</h4>
+    <button class="btn btn-success" onclick="retrieveData()">Recuperar datos</button>
+    <p id="response" class="mt-3" style="font-size: 500%; color: #f60;"></p>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+    <script>
+        async function retrieveData() {
+            // Token no válido para mostrar cómo se puede enviar en los headers al realizar la solicitud
+            const token = 'abcdefgh';
+            
+            const fetch_options = {
+                method: 'GET',
+                headers: {
+                    // Enviamos el token JWT en el header Authorization, antecediendo la palabra Bearer
+                    'Authorization': `Bearer ${token}`
+                }
+            };
+            const response = await fetch('http://127.0.0.1:5000/api/carts', fetch_options);
+            const jsonResponse = await response.json();
+            
+            console.log(jsonResponse);
+        }
+    </script>
+</body>
+
+</html>
