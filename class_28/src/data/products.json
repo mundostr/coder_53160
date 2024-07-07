@@ -1,0 +1,22 @@
+[
+    {
+        "_id": "1",
+        "title": "Producto 1 archivo",
+        "Price": 8000.0,
+        "stock": 10
+    },
+
+    {
+        "_id": "2",
+        "title": "Producto 2 archivo",
+        "Price": 200.2,
+        "stock": 20
+    },
+
+    {
+        "_id": "3",
+        "title": "Producto 3 archivo",
+        "Price": 100.1,
+        "stock": 3
+    }
+]
