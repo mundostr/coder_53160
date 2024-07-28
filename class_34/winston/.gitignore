@@ -1,0 +1,3 @@
+/sessions
+.env.devel
+.env.prod
