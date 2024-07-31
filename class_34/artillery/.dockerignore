@@ -1,0 +1,7 @@
+# .dockerignore permite excluir directorios y archivos al construir la imagen
+# Pueden ser archivos que estén en el proyecto original pero no nos interese incluir en la imagen,
+# o como en este caso, el directorio node_modules que queremos regenerar por completo, ya que la
+# imagen utilizará como base un SO distinto al usado para desarrollo, y pueden aparecer conflictos
+# en librerías, de esta forma garantizamos que el sistema descarga lo que corresponde para ese SO.
+
+node_modules
