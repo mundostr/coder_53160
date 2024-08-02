@@ -1,0 +1,54 @@
+# Este es nuetro primer archivo de config para realizar un deploy con Kubernetes,
+# utilizamos Minikube para levantar un cluster de prueba local y activando luego containers
+# basados en la imagen de prueba que subimos recientemente en nuestra cuenta de hub.docker.com
+
+# El archivo se organiza en 2 secciones:
+
+# Sección 1: deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coder53160-deploy
+spec:
+  # Cantidad de pods para nuestro cluster
+  replicas: 3
+  selector:
+    matchLabels:
+      app: coder53160
+  template:
+    metadata:
+      labels:
+        app: coder53160
+    spec:
+      containers:
+        - name: coder53160
+          # imagen de origen a utilizar para los containers
+          image: mundostr/coder_53160_cl34:1.0.0
+          ports:
+            - containerPort: 8080
+          # Podemos configurar las variables de entorno necesarias
+          env:
+            - name: PORT
+              value: "8080"
+            - name: MONGODB_URI
+              value: "mongodb+srv://coder_53160:coder2024@clustercoder.sxqjiud.mongodb.net/coder_53160"
+          # Always siempre trata de descargar la última versión disponible de la imagen cada vez que
+          # se deben lanzar un container, excepto que tenga en cache local una con el mismo digest
+          # Ver tags vs digest (https://kubernetes.io/docs/concepts/containers/images/)
+          imagePullPolicy: Always
+
+# Sección 2: servicio
+# Este es el servicio a través del cual podremos utilizar los recursos del cluster
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: coder53160-service
+spec:
+  selector:
+    app: coder53160
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer
