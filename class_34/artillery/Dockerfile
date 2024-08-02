@@ -1,15 +1,15 @@
-# FROM node:20: el nombre y versión de la imagen base utilizada (obtenida de hub.docker.com)
+# FROM node:20-apline: nombre y versión de la imagen base utilizada (obtenida de hub.docker.com)
 # WORKDIR /app: el directorio de trabajo utilizado dentro de la imagen
-# COPY package*.json ./: copia package.json y package-lock.json al raíz
-# RUN npm install: ejecuta el npm install que descarga todo lo indicado en package.json
+# COPY package*.json .: copia package.json y package-lock.json al raíz
+# RUN npm i: ejecuta el npm install que descarga todo lo indicado en package.json
 # COPY . .: copia el resto de los archivos fuente de nuestra app a la imagen
-# EXPOSE 3000: al correr la app, será expuesta en el puerto 3000
+# EXPOSE 8080: al correr la app, será expuesta este puerto
 # CMD ["npm", "start"]: ejecuta finalmente un npm start para iniciar la app
 
-FROM node:20
+FROM node:20-alpine
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
+COPY package*.json .
+RUN npm i
 COPY . .
 EXPOSE 8080
 CMD ["npm", "start"]
