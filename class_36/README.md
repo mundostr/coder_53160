@@ -56,3 +56,78 @@ docker login
 ```
 docker push usuario/nombre_imagen:version
 ```
+
+### Generación de cluster Kubernetes
+Kubernetes es una tecnología para orquestación de contenedores, en otras palabras, manejo de clusters de contenedores.
+
+Realizamos una prueba utilizando Minukube (un pequeño servidor de Kubernetes local), configurando el cluster a través de un archivo deploy.yaml.
+
+Esta es la razón por la cual hemos publicado nuestra imagen en el hub, Minikube tomará la imagen desde allí para generar el cluster:
+
+1. Instalación de herramienta CLI (kubectl):
+```
+https://kubernetes.io/docs/tasks/tools/
+```
+
+2. Instalación de servidor Minikube:
+```
+# Si se dispone de Chocolatey, simplemente:
+choco install minikube
+# sino seguir instrucciones en:
+https://minikube.sigs.k8s.io/docs/start/
+```
+
+3. Levantar cluster vacío:
+```
+minikube start
+# Verificar con Docker Desktop que haya un contenedor Minikube activo, corriendo el servidor
+```
+
+4. Desplegar pods (grupos de contenedores) en el cluster, según config en deploy.yaml:
+```
+kubectl apply -f deploy.yaml
+```
+
+5. Aguardar a que levante y verificar disponibilidad:
+```
+kubectl get deployments
+kubectl get pods
+kubectl get services
+```
+
+6. Reinicio de deploy:
+```
+kubectl rollout restart deployment nombre_deployment
+```
+
+7. Listado servicios cluster disponibles:
+```
+minikube service list
+```
+
+8. Inicio de servicio (puerta de acceso al cluster):
+```
+minikube service nombre_servicio
+```
+
+El sistema generará un túnel de acceso, brindándonos un puerto a través del cual ingresar, a partir de allí, podremos acceder a los distintos endpoints del back de Artillery que corre en el cluster.
+
+9. Detención del servidor (se escala el cluster a 0, se vacía):
+```
+kubectl scale deployment nombre_deployment --replicas=0
+```
+
+10. Borrado deployment:
+```
+kubectl delete deployment nombre_deployment
+```
+
+Ejemplo servicio en la nube:
+https://www.linode.com/docs/guides/deploy-container-image-to-kubernetes/
+
+Enlaces de interés:
+* https://hub.docker.com
+* https://www.docker.com/products/docker-desktop/
+* https://www.portainer.io/
+* https://linuxcontainers.org/
+* https://www.proxmox.com/en/
