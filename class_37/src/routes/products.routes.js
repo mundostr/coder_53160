@@ -33,7 +33,7 @@ router.get('/:page', async (req, res) => {
 
 router.get('/one/:id', async (req, res) => {
     try {
-        const product = await manager.getById(req.params.id);
+        const product = await manager.getOne({ _id: req.params.id});
         res.status(200).send({ origin: config.SERVER, payload: product });
     } catch (err) {
         res.status(500).send({ origin: config.SERVER, payload: null, error: err.message });
