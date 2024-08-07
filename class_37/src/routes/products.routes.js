@@ -19,13 +19,18 @@ const transport = nodemailer.createTransport({
     }
 });
 
-router.param('id', verifyMongoDBId());
+// router.param('id', verifyMongoDBId());
 
 router.get('/:page', async (req, res) => {
     try {
-        const products = await manager.getPaginated(50, req.params.page || 1);
-
-        res.status(200).send({ origin: config.SERVER, payload: products });
+        const page = +req.params.page;
+        if (page === undefined || isNaN(page)) {
+            res.status(400).send({ origin: config.SERVER, payload: null, error: 'Solicitud mal formada' });
+        } else {
+            const products = await manager.getPaginated(50, req.params.page || 1);
+            
+            res.status(200).send({ origin: config.SERVER, payload: products });
+        }
     } catch (err) {
         res.status(500).send({ origin: config.SERVER, payload: null, error: err.message });
     }
