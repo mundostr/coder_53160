@@ -19,7 +19,7 @@ const transport = nodemailer.createTransport({
     }
 });
 
-// router.param('id', verifyMongoDBId());
+router.param('id', verifyMongoDBId());
 
 router.get('/:page', async (req, res) => {
     try {
