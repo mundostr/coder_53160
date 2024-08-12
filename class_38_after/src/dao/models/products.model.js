@@ -12,6 +12,9 @@ const schema = new mongoose.Schema({
     thumbnail: { type: String, required: false },
     stock: { type: Number, required: true },
     category: { type: String, required: true },
+    // Agregamos un campo owner (propietario) que nos servirá
+    // más adelante para ver a quién pertenece determinado producto
+    // y decidir si permitimos ejecutar la acción (borrado por ejemplo)
     owner: { type: String, default: 'admin' }
 });
 
