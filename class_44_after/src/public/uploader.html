@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coder 53160 Upload</title>
+</head>
+<body>
+    <h1>Coder 53160 Upload</h1>
+    
+    <!-- FUNDAMENTAL al activar un formulario para carga de archivos, indicar el
+    método POST y el enctype correcto -->
+    <form action="/upload/products" method="POST" enctype="multipart/form-data">
+        <!-- También importante el atributo multiple en el campo file,
+        si queremos poder seleccionar más de un archivo a la vez.
+        Verificar que el valor de name coincida con el configurado
+        para multer en el endpoint -->
+        <input type="file" name="productImages" multiple>
+        <br /><br />
+        <button type="submit">Subir imágenes de producto</button>
+    </form>
+
+    <br /><br />
+
+    <form action="/upload/documents" method="POST" enctype="multipart/form-data">
+        <input type="file" name="documentImages" multiple>
+        <br /><br />
+        <button type="submit">Subir documentos de usuario</button>
+    </form>
+</body>
+</html>
